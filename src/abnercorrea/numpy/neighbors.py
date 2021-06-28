@@ -1,7 +1,7 @@
 import numpy as np
 
-from abner_ml.numpy.util.data_prep import split_train_validation
-from abner_ml.numpy.util.math import weighted_mode
+from abnercorrea.numpy.util.data_prep import split_train_validation
+from abnercorrea.numpy.util.math import weighted_mode
 
 
 class KNearestNeighborsClassifier:

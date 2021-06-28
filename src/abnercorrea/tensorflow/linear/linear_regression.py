@@ -1,8 +1,8 @@
 import tensorflow as tf
 
-from abner_ml.tensorflow.util.data_prep import prepend_col
-from abner_ml.tensorflow.util.stat import r2_score
-from abner_ml.tensorflow.util.tensorflow import tf_default_device
+from abnercorrea.tensorflow.util.data_prep import prepend_col
+from abnercorrea.tensorflow.util.stat import r2_score
+from abnercorrea.tensorflow.util.tensorflow import tf_default_device
 
 
 class LinearRegression:

@@ -1,7 +1,7 @@
-from abner_ml import numpy as np
+from abnercorrea import numpy as np
 
-from abner_ml.numpy.util.data_prep import split_train_validation
-from abner_ml.numpy.util.stat import r2_score, mean_squared_error
+from abnercorrea.numpy.util.data_prep import split_train_validation
+from abnercorrea.numpy.util.stat import r2_score, mean_squared_error
 
 
 class RidgeRegression:

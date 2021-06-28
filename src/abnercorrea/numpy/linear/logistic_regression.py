@@ -1,7 +1,7 @@
-from abner_ml import numpy as np
+from abnercorrea import numpy as np
 
-from abner_ml.numpy.util.data_prep import to_binary_classes, split_train_validation
-from abner_ml.numpy.util.stat import logistic_sigmoid
+from abnercorrea.numpy.util.data_prep import to_binary_classes, split_train_validation
+from abnercorrea.numpy.util.stat import logistic_sigmoid
 
 
 class LogisticRegressionClassifier:

@@ -6,7 +6,7 @@ from plotly.subplots import make_subplots
 
 from sklearn.decomposition import PCA
 
-from abner_ml.numpy.util.data_prep import prepend_col
+from abnercorrea.numpy.util.data_prep import prepend_col
 
 
 def plot_alpha_scores(alphas, scores, title='Alpha Scores'):
