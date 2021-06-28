@@ -1,4 +1,4 @@
-from abnercorrea import numpy as np
+import numpy as np
 
 from abnercorrea.numpy.util.data_prep import split_train_validation
 from abnercorrea.numpy.util.stat import r2_score, mean_squared_error

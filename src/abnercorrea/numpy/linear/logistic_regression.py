@@ -1,4 +1,4 @@
-from abnercorrea import numpy as np
+import numpy as np
 
 from abnercorrea.numpy.util.data_prep import to_binary_classes, split_train_validation
 from abnercorrea.numpy.util.stat import logistic_sigmoid
