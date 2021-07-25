@@ -93,12 +93,12 @@ class LogisticRegressionClassifierTF:
         # w = 0 is a good starting value for the iterative procedure
         w0 = tf.zeros(shape=[f], dtype=tf.float64)
         # since gradient is used to check convergence, this guarantees at least 1 iteration.
-        gradient0 = tf.fill(dims=[f], value=tol + 1)
+        gradient0 = tf.fill(dims=[f], value=tol * 2)
 
         # checks convergence (gradient = 0)
         not_converged = lambda w, gradient: tf.reduce_any(tf.abs(gradient) >= tol)
 
-        # Newton step calculates the gradient and the hessian to update w
+        # Newton step
         def newton_step(w_old, gradient_old):
             gradient, p = self.gradient(X_, y, w_old, alpha)
             hessian = self.hessian(X_, p, alpha)
@@ -110,11 +110,15 @@ class LogisticRegressionClassifierTF:
             gradient.set_shape(gradient_old.get_shape())
             return [w, gradient]
 
-        [w, _] = tf.while_loop(
-            cond=not_converged,
-            body=newton_step,
-            loop_vars=[w0, gradient0],
-            maximum_iterations=max_iter
+        # since back_prop is not needed, using tf.stop_gradient to prevent gradient computation.
+        [w, _] = tf.nest.map_structure(
+            tf.stop_gradient,
+            tf.while_loop(
+                cond=not_converged,
+                body=newton_step,
+                loop_vars=[w0, gradient0],
+                maximum_iterations=max_iter
+            )
         )
 
         return w
@@ -138,7 +142,7 @@ class LogisticRegressionClassifierTF:
         Score used is the accuracy of the model. (true positive + true negative rate)
         """
         predictions = self.predict_tf(X_, w)
-        accurate = tnp.sum(y == predictions)
+        accurate = tf.reduce_sum(tf.where(y == predictions, 1., 0.))
         n = tf.size(y)
         accuracy = accurate / n
         return accuracy
