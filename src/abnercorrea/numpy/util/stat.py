@@ -6,9 +6,10 @@ def logistic_sigmoid(x):
 
 
 def softmax(x):
-    p_softmax = np.exp(x)
-    p_softmax /= p_softmax.sum(axis=1)[:, np.newaxis]
-    return p_softmax
+    # subtracts max value to prevent potential overflow in case of large values of x.
+    numerator = np.exp(x - np.max(x, axis=-1)[:, np.newaxis])
+    denominator = numerator.sum(axis=-1)[:, np.newaxis]
+    return numerator / denominator
 
 
 def empirical_covariance(X, y, classes, mu):

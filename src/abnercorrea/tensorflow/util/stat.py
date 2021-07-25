@@ -5,6 +5,17 @@ from tensorflow.python.ops.numpy_ops import np_config
 np_config.enable_numpy_behavior()
 
 
+def logistic_sigmoid(x):
+    return 1. / (1. + tf.exp(-x))
+
+
+def softmax(x):
+    # subtracts max value to prevent potential overflow in case of large values of x.
+    numerator = tf.exp(x - tf.reduce_max(x, axis=-1)[:, tf.newaxis])
+    denominator = tf.reduce_sum(numerator, axis=-1)[:, tf.newaxis]
+    return numerator / denominator
+
+
 def mean_squared_error(y, y_pred):
     mse = tnp.average((y - y_pred) ** 2)
     return mse
