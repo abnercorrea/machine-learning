@@ -2,6 +2,7 @@ import tensorflow as tf
 
 from abnercorrea.tensorflow.util.data_prep import split_train_validation_tf
 from abnercorrea.tensorflow.util.stat import logistic_sigmoid
+from abnercorrea.tensorflow.util.tensorflow import tf_while_loop_body
 
 
 class LogisticRegressionClassifierTF:
@@ -98,16 +99,14 @@ class LogisticRegressionClassifierTF:
         # checks convergence (gradient = 0)
         not_converged = lambda w, gradient: tf.reduce_any(tf.abs(gradient) >= tol)
 
-        # Newton step
-        def newton_step(w_old, gradient_old):
-            gradient, p = self.gradient(X_, y, w_old, alpha)
+        # Newton step calculates the gradient and the hessian to update the value of w.
+        @tf_while_loop_body()
+        def newton_step(w, gradient):
+            gradient, p = self.gradient(X_, y, w, alpha)
             hessian = self.hessian(X_, p, alpha)
             hessian_inv = tf.linalg.inv(hessian)
-            # w_new = w_old - inverse(hessian(log_likelihood(w))) @ gradient(log_likelihood(w))
-            w = w_old - hessian_inv @ gradient
-            # sets shape of loop variables to prevent errors related to varying shape across iterations.
-            w.set_shape(w_old.get_shape())
-            gradient.set_shape(gradient_old.get_shape())
+            # w_new = w - inverse(hessian(log_likelihood(w))) @ gradient(log_likelihood(w))
+            w = w - hessian_inv @ gradient
             return [w, gradient]
 
         # since back_prop is not needed, using tf.stop_gradient to prevent gradient computation.

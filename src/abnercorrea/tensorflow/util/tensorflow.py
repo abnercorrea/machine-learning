@@ -1,6 +1,22 @@
 import tensorflow as tf
 
 
+def tf_while_loop_body():
+    """
+    Decorator for while_loop body functions that sets the shape of loop vars to match the shape of the input tensors.
+    This prevents errors related to varying tensor shape across iterations.
+    """
+    def decorator(f):
+        def applicator(*args):
+            loop_vars = f(*args)
+            # sets shape of loop variables to prevent errors related to varying shape across iterations.
+            for var_new, var_old in zip(loop_vars, args):
+                var_new.set_shape(var_old.get_shape())
+            return loop_vars
+        return applicator
+    return decorator
+
+
 def tf_default_device(device_num=0):
     """
     Order of precedence: TPU, GPU and CPU
