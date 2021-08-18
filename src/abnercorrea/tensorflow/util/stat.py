@@ -16,6 +16,13 @@ def softmax(x):
     return numerator / denominator
 
 
+def empirical_covariance(X, y, classes, mu):
+    x = np.copy(X)
+    for class_k, mu_k in zip(classes, mu):
+        x[y == class_k] -= mu_k
+    return (x.T @ x) / x.shape[0]
+
+
 def mean_squared_error(y, y_pred):
     mse = tnp.average((y - y_pred) ** 2)
     return mse
