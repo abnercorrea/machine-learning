@@ -1,6 +1,6 @@
 import numpy as np
 
-from abnercorrea.numpy.util.stat import empirical_covariance, logistic_sigmoid, softmax
+from ..util.stat import empirical_covariance, logistic_sigmoid, softmax
 
 
 class GaussianMixtureClassifier:

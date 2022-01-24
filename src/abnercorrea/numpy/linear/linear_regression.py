@@ -1,6 +1,6 @@
 import numpy as np
 
-from abnercorrea.numpy.util.stat import r2_score, mean_squared_error
+from ..util.stat import r2_score, mean_squared_error
 
 
 class LinearRegression:

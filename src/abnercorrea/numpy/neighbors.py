@@ -1,7 +1,7 @@
 import numpy as np
 
-from abnercorrea.numpy.util.data_prep import split_train_validation
-from abnercorrea.numpy.util.math import weighted_mode
+from util.data_prep import split_train_validation
+from util.math import weighted_mode
 
 
 class KNearestNeighborsClassifier:
@@ -40,8 +40,8 @@ class KNearestNeighborsClassifier:
         xtr, ytr, k = self.xtr, self.ytr, self.k
         # squared distances, between row vectors of a  and row vectors of b, can be calculated with:
         # distances = dot(a, a) - 2 * dot(a, b) + dot(b, b)
-        # Brilliant... (a - b)^2 = a^2 - 2ab + b^2
-        # Sqrt is NOT needed... brilliant
+        # above comes from: (a - b)^2 = a^2 - 2ab + b^2
+        # Sqrt is NOT needed...
         # First term bradcast as a column, thrid term broadcast as a row
         # distances.shape = (xtr.shape[0], X.shape[0])
         # einsum implementation seems to be faster than above, not by much though.

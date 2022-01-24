@@ -1,7 +1,10 @@
+import logging
 import numpy as np
 
-from abnercorrea.numpy.util.data_prep import to_binary_classes, split_train_validation
-from abnercorrea.numpy.util.stat import logistic_sigmoid
+from ..util.data_prep import to_binary_classes, split_train_validation
+from ..util.stat import logistic_sigmoid
+
+logger = logging.getLogger(__name__)
 
 
 class LogisticRegressionClassifier:
@@ -83,7 +86,8 @@ class LogisticRegressionClassifier:
             converged = np.all(gradient < tol)
             iter += 1
 
-        # print(f'Alpha: {alpha} - Iterations: {iter} - Converged: {converged}')
+        logger.info(f'Alpha: {alpha} - Iterations: {iter} - Converged: {converged}')
+
         return w
 
     def gradient_descent(self, X_, y, w_start, alpha, max_iter):

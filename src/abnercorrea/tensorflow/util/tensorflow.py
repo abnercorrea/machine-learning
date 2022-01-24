@@ -5,6 +5,7 @@ def tf_while_loop_body():
     """
     Decorator for while_loop body functions that sets the shape of loop vars to match the shape of the input tensors.
     This prevents errors related to varying tensor shape across iterations.
+    This decorator eliminates the need to explicitly call tensor.set_shape() for each function arg.
     """
     def decorator(f):
         def applicator(*args):

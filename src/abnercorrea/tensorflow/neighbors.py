@@ -2,8 +2,8 @@ import tensorflow as tf
 import tensorflow.experimental.numpy as tnp
 from tensorflow.python.ops.numpy_ops import np_config
 
-from abnercorrea.tensorflow.util.data_prep import split_train_validation_tf
-from abnercorrea.tensorflow.util.math import weighted_mode
+from util.data_prep import split_train_validation_tf
+from util.math import weighted_mode
 
 np_config.enable_numpy_behavior()
 
