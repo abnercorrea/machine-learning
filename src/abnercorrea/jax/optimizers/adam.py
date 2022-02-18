@@ -27,11 +27,12 @@ class Adam(MiniBatchSGD):
 
         zeroes = jax.tree_multimap(lambda g: jnp.zeros_like(g), grads)
 
-        # Applies bias corrections
+        # Momentum
         vd = jax.tree_multimap(lambda vd, g: self.momentum * vd + (1 - self.momentum) * g, self.vd or zeroes, grads)
         vd_correction = 1 / (1 - self.momentum ** epoch)
         self.vd = jax.tree_multimap(lambda vd: vd * vd_correction, vd)
 
+        # RMSProp
         sd = jax.tree_multimap(lambda sd, g: self.rms_momentum * sd + (1 - self.rms_momentum) * g ** 2, self.sd or zeroes, grads)
         sd_correction = 1 / (1 - self.rms_momentum ** epoch)
         self.sd = jax.tree_multimap(lambda sd: sd * sd_correction, sd)
