@@ -9,15 +9,19 @@ from sklearn.decomposition import PCA
 from data_prep import prepend_col
 
 
+def plot_2d(x, y, title, axes_title, max=True):
+    minmax = y.argmax() if max else y.argmin()
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name=' x '.join(axes_title)))
+    fig.add_trace(go.Scatter(x=[x[minmax]], y=[y[minmax]], mode='markers', name='Max' if max else 'Min'))
+    fig.update_layout(title=title, autosize=True, width=500, height=500,)
+    fig.update_xaxes(title_text=axes_title[0])
+    fig.update_yaxes(title_text=axes_title[1])
+    fig.show()
+
+
 def plot_alpha_scores(alphas, scores, title='Alpha Scores'):
-    max_score = scores.argmax()
-    alpha_scores_fig = go.Figure()
-    alpha_scores_fig.add_trace(go.Scatter(x=alphas, y=scores, mode='lines', name='Alpha Scores'))
-    alpha_scores_fig.add_trace(go.Scatter(x=[alphas[max_score]], y=[scores[max_score]], mode='markers', name='Best Alpha'))
-    alpha_scores_fig.update_layout(title=title, autosize=True, width=500, height=500,)
-    alpha_scores_fig.update_xaxes(title_text='Alpha')
-    alpha_scores_fig.update_yaxes(title_text='Score')
-    alpha_scores_fig.show()
+    plot_2d(alphas, scores, title, axes_title=['Alpha', 'Score'], max=True)
 
 
 def plot_pca(x, y, n_components=None, marker_size=6):
