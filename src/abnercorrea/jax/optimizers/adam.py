@@ -2,6 +2,7 @@ from absl import logging
 from functools import partial
 
 import jax
+import jax.numpy as jnp
 
 from abnercorrea.jax.optimizers.gradient_descent import MiniBatchSGD
 

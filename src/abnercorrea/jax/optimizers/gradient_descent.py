@@ -41,6 +41,7 @@ class MiniBatchSGD(Optimizer):
         self.overshoot_decrease_rate = overshoot_decrease_rate
         self.stagnation_batch_size = stagnation_batch_size
         self.prng_key = prng_key or random.PRNGKey(0)
+        self.loss_hist = []
 
     @partial(jax.jit, static_argnames=('self',))
     def calculate_update(self, grads, epoch):
@@ -72,8 +73,7 @@ class MiniBatchSGD(Optimizer):
         :return:
         """
         mini_batch_size, epochs, eps, learning_rate, overshoot_decrease_rate, stagnation_batch_size = self.mini_batch_size, self.epochs, self.eps, self.learning_rate, self.overshoot_decrease_rate, self.stagnation_batch_size
-
-        loss_hist = []
+        loss_hist = self.loss_hist
 
         for epoch in range(1, epochs + 1):
             self.epoch = epoch
